@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const routes = require('./routes')
+const morgan = require('morgan')
+require('./config/connection')
 
 class AppController {
   constructor () {
@@ -11,13 +13,14 @@ class AppController {
 
   middleware () {
     this.express.use(express.json())
+    this.express.use(morgan('dev'))
 
     this.express.use((req, res, next) => {
       res.header('Access-Controll-AlloW-Origin', '*')
       res.header('Access-Controll-AlloW-Methods', 'GET, POST, PUT, DELETE')
       res.header('Access-Controll-AlloW-Headers', 'Content-type, Authorization, Acept, Origin, X-Requested-With')
 
-      this.app.use(cors())
+      this.express.use(cors())
       next()
     })
   }
