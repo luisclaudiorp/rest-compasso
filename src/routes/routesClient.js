@@ -5,7 +5,7 @@ const ClientController = require('../app/Controllers/ClientController')
 
 routes.get('/', ClientController.showAll)
 
-routes.get('/name/:name', ClientController.showByName)
+routes.get('/fullName/:fullName', ClientController.showByName)
 
 routes.get('/:id', ClientController.showById)
 

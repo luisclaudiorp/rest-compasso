@@ -89,9 +89,16 @@ class CityController {
 
   async destroy (req, res) {
     try {
-      await City.findByIdAndRemove(req.params.id)
-
-      return res.status(200).send()
+      const city = await City.findByIdAndRemove(req.params.id)
+      if (!city) {
+        return res.status(400).json({
+          message: 'City not found'
+        })
+      } else {
+        return res.status(200).json({
+          message: 'City successfully deleted'
+        })
+      }
     } catch (error) {
       return res.status(400).json({
         message: 'No deleting city'

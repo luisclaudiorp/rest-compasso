@@ -9,11 +9,7 @@ const City = mongoose.Schema({
   state: {
     type: String,
     required: true
-  },
-  clients: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'client'
-  }]
+  }
 }, {
   timestamps: true
 })
