@@ -5,7 +5,13 @@ class CityController {
   async showAll (req, res) {
     try {
       const cities = await City.find()
-      return res.status(200).send({ cities })
+      if (cities.length === 0) {
+        return res.status(400).json({
+          message: 'No cities found'
+        })
+      } else {
+        return res.status(200).send({ cities })
+      }
     } catch (error) {
       return res.status(400).json({
         message: 'No cities found'
@@ -13,9 +19,21 @@ class CityController {
     }
   }
 
-  async show (req, res) {
+  async showByName (req, res) {
     try {
-      const city = await City.findById(req.params.id)
+      const city = await City.findOne({ name: req.params.name })
+
+      return res.status(200).send({ city })
+    } catch (error) {
+      return res.status(400).json({
+        message: 'No city found'
+      })
+    }
+  }
+
+  async showByState (req, res) {
+    try {
+      const city = await City.find({ state: req.params.state })
 
       return res.status(200).send({ city })
     } catch (error) {

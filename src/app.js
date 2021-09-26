@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-const routes = require('./routes')
+const routesCity = require('./routes/routesCity')
+const routesClient = require('./routes/routesClient')
 const morgan = require('morgan')
 require('./config/connection')
 
@@ -26,7 +27,8 @@ class AppController {
   }
 
   routes () {
-    this.express.use(routes)
+    this.express.use('/api/city', routesCity)
+    this.express.use('/api/city/client', routesClient)
   }
 }
 
