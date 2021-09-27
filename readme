@@ -1,0 +1,8 @@
+start project
+npm install
+
+run dev project
+nodemon src/server.js --ignore __tests__
+
+run production
+node src/server.js

@@ -1,4 +1,4 @@
-const Client = require('../Models/Client')
+const Client = require('../Schema/Client')
 const yup = require('yup')
 
 class ClientController {

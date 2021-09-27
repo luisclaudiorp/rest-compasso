@@ -1,4 +1,4 @@
-const City = require('../Models/City')
+const City = require('../Schema/City')
 const yup = require('yup')
 
 class CityController {
