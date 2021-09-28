@@ -14,11 +14,7 @@ const Client = mongoose.Schema({
     type: String,
     required: true
   },
-  age: {
-    type: Number,
-    required: true
-  },
-  city: {
+  cityName: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'city',
     required: true

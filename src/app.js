@@ -1,9 +1,9 @@
 const express = require('express')
 const cors = require('cors')
-const routesCity = require('./routes/routesCity')
-const routesClient = require('./routes/routesClient')
-const morgan = require('morgan')
-require('./config/connection')
+const routesCity = require('./router/City')
+const routesClient = require('./router/Client')
+// const morgan = require('morgan')
+require('./infra/connection')
 
 class AppController {
   constructor () {
@@ -14,7 +14,7 @@ class AppController {
 
   middleware () {
     this.express.use(express.json())
-    this.express.use(morgan('dev'))
+    // this.express.use(morgan('dev'))
 
     this.express.use((req, res, next) => {
       res.header('Access-Controll-AlloW-Origin', '*')
