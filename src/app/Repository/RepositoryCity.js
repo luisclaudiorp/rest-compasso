@@ -1,20 +1,19 @@
 const City = require('../Schema/City')
 
 module.exports = {
-  cityGet (data) {
-    return City.find({ $or: [{ data }, {}] })
+  cityGet (query) {
+    return City.find(query)
+  },
+  cityGetOne (query) {
+    return City.findOne(query)
   },
   cityInsert (city) {
     return City.create(city)
   },
   cityUpdate (_id, updateData) {
-    return City.updateOne(updateData, {
-      $where: { _id: _id }
-    })
+    return City.updateOne(updateData, { _id: _id })
   },
   cityRemove (_id) {
-    return City.deleteOne({
-      $where: { _id: _id }
-    })
+    return City.deleteOne({_id: _id})
   }
 }

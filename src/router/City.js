@@ -3,7 +3,7 @@ const routes = new Router()
 
 const CityController = require('../app/Controllers/CityController')
 
-routes.get('/', CityController.getCity)
+routes.get('/:data?', CityController.getCity)
 
 // routes.get('/name/:name', CityController.showByName)
 
@@ -13,6 +13,6 @@ routes.get('/', CityController.getCity)
 
 // routes.put('/:id', CityController.update)
 
-// routes.delete('/:id', CityController.destroy)
+routes.delete('/:id', CityController.delete)
 
 module.exports = routes

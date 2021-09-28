@@ -1,16 +1,7 @@
 const RepositoryCity = require('../Repository/RepositoryCity')
 
 class City {
-  constructor ({ _id, cityName, state, createdAt, updatedAt }) {
-    this._id = _id
-    this.cityName = cityName
-    this.state = state
-    this.createdAt = createdAt
-    this.updatedAt = updatedAt
-  }
-
   async createCity () {
-    this.validate()
     const result = await RepositoryCity.cityInsert({
       cityName: this.cityName,
       state: this.state
@@ -20,14 +11,24 @@ class City {
     this.updatedAt = result.updatedAt
   }
 
-  async getCity () {
-    const found = await RepositoryCity.cityGet()
-    console.log(found)
-    this._id = found._id
-    this.cityName = found.cityName
-    this.state = found.state
-    this.createdAt = found.createdAt
-    this.updatedAt = found.updatedAt
+  async getCity (data) {
+    if(typeof data === 'string' && data.length > 3){
+      let query = { cityName: data }
+      const found = await RepositoryCity.cityGetOne(query)
+      if(found === null){
+        throw new Error ('No city found')
+      }
+      return found
+    }else if (typeof data === 'string' && data.length === 2){
+      let query = { state: data }
+      const found = await RepositoryCity.cityGet(query)
+      if(found.length === 0){
+        throw new Error ('No state found')
+      }
+      return found
+    } else{
+      throw new Error ('insert name city ou state')
+    }
   }
 
   async updateCity () {
@@ -47,8 +48,8 @@ class City {
     await RepositoryCity.cityUpdate(this._id, dataUpdate)
   }
 
-  deleteCity () {
-    return RepositoryCity.cityRemove(this._id)
+  deleteCity (_id) {
+    return RepositoryCity.cityRemove(_id)
   }
 
   validateCity () {
@@ -64,3 +65,4 @@ class City {
 }
 
 module.exports = City
+

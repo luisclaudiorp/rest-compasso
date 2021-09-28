@@ -2,42 +2,18 @@ const ServiceCity = require('../Service/serviceCity')
 // const yup = require('yup')
 
 class CityController {
-  async getCity (query, res) {
-    const cities = new ServiceCity()
-    await cities.getCity({ query })
-    console.log(cities)
-    // try {
-    //   return res.status(200).send({ cities })
-    // } catch (error) {
-    //   return res.status(400).json({
-    //     message: 'No cities found'
-    //   })
-    // }
+  async getCity (req, res) {
+    try {
+      const query = req.params.data
+      const cities = new ServiceCity()
+      const found = await cities.getCity(query)
+      return res.status(200).send( found )
+    } catch (error) {
+      return res.status(400).json({
+        message: 'No cities found'
+      })
+    }
   }
-
-  // async showByName (req, res) {
-  //   try {
-  //     const city = await City.findOne({ name: req.params.name })
-
-  //     return res.status(200).send({ city })
-  //   } catch (error) {
-  //     return res.status(400).json({
-  //       message: 'No city found'
-  //     })
-  //   }
-  // }
-
-  // async showByState (req, res) {
-  //   try {
-  //     const city = await City.find({ state: req.params.state })
-
-  //     return res.status(200).send({ city })
-  //   } catch (error) {
-  //     return res.status(400).json({
-  //       message: 'No city found'
-  //     })
-  //   }
-  // }
 
   // async store (req, res) {
   //   const schema = yup.object().shape({
@@ -83,23 +59,26 @@ class CityController {
   //   }
   // }
 
-  // async destroy (req, res) {
-  //   try {
-  //     const city = await City.findByIdAndRemove(req.params.id)
-  //     if (!city) {
-  //       return res.status(400).json({
-  //         message: 'City not found'
-  //       })
-  //     } else {
-  //       return res.status(200).json({
-  //         message: 'City successfully deleted'
-  //       })
-  //     }
-  //   } catch (error) {
-  //     return res.status(400).json({
-  //       message: 'No deleting city'
-  //     })
-  //   }
-  // }
+  async delete (req, res) {
+    try {
+    const query = req.params.id
+    const cities = new ServiceCity()
+    const found = await cities.deleteCity(query)
+    console.log(found)
+      if (!found) {
+        return res.status(400).json({
+          message: 'City not found'
+        })
+      } else {
+        return res.status(200).json({
+          message: 'City successfully deleted'
+        })
+      }
+    } catch (error) {
+      return res.status(400).json({
+        message: 'No deleting city'
+      })
+    }
+  }
 }
 module.exports = new CityController()
