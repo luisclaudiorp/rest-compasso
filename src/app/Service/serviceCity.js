@@ -1,68 +1,60 @@
 const RepositoryCity = require('../Repository/RepositoryCity')
+const { citySchema, _idSchema } = require('../Validators/validationCity')
 
 class City {
-  async createCity () {
-    const result = await RepositoryCity.cityInsert({
-      cityName: this.cityName,
-      state: this.state
-    })
-    this._id = result._id
-    this.createdAt = result.createdAt
-    this.updatedAt = result.updatedAt
-  }
-
-  async getCity (data) {
-    if(typeof data === 'string' && data.length > 3){
-      let query = { cityName: data }
-      const found = await RepositoryCity.cityGetOne(query)
-      if(found === null){
-        throw new Error ('No city found')
-      }
-      return found
-    }else if (typeof data === 'string' && data.length === 2){
-      let query = { state: data }
-      const found = await RepositoryCity.cityGet(query)
-      if(found.length === 0){
-        throw new Error ('No state found')
-      }
-      return found
-    } else{
-      throw new Error ('insert name city ou state')
+  async createCity (data) {
+    try {
+      const validation = await citySchema.validateAsync(data)
+      await RepositoryCity.cityInsert(validation)
+    } catch (error) {
+      console.log(error)
     }
   }
 
-  async updateCity () {
-    await RepositoryCity.cityGet(this._id)
-    const fields = ['cityName', 'state']
-    const dataUpdate = {}
-    fields.forEach((field) => {
-      const data = this[field]
+  async getCity (data) {
+    if (typeof data === 'string' && data.length > 2) {
+      const query = { cityName: data }
+      const found = await RepositoryCity.cityGetOne(query)
+      if (found === null) {
+        throw new Error('No city found')
+      }
+      return found
+    } else if (typeof data === 'string' && data.length === 2) {
+      const query = { state: data }
+      const found = await RepositoryCity.cityGet(query)
+      if (found.length === 0) {
+        throw new Error('No state found')
+      }
+      return found
+    } else if (data === undefined) {
+      const query = {}
+      const found = await RepositoryCity.cityGet(query)
+      return found
+    }
+  }
 
-      if (typeof data === 'string' && data.length === 0) {
-        dataUpdate[field] = data
+  async updateCity (_id) {
+    const updateData = await this.getCityById(_id)
+  }
+
+  async getCityById (_id) {
+    try {
+      const data = await _idSchema.validateAsync({ _id })
+      // console.log(data)
+      if (!_id === undefined) {
+        const query = { _id: data }
+        const found = await RepositoryCity.cityGetOne(query)
+        console.log(found)
+        return found
       }
-      if (Object.keys(dataUpdate).length === 0) {
-        throw new Error('data not provided')
-      }
-    })
-    await RepositoryCity.cityUpdate(this._id, dataUpdate)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   deleteCity (_id) {
     return RepositoryCity.cityRemove(_id)
   }
-
-  validateCity () {
-    const fields = ['cityName', 'state']
-    fields.forEach((field) => {
-      const data = this[field]
-
-      if (typeof data === 'string' && data.length === 0) {
-        throw new Error('invalid fields')
-      }
-    })
-  }
 }
 
 module.exports = City
-

@@ -8,12 +8,15 @@ module.exports = {
     return City.findOne(query)
   },
   cityInsert (city) {
-    return City.create(city)
+    const { cityName, state } = city
+    return City.create({ cityName, state })
   },
-  cityUpdate (_id, updateData) {
-    return City.updateOne(updateData, { _id: _id })
+  cityUpdate (updateData) {
+    const { _id, cityName, state } = updateData
+    // console.log(updateData)
+    return City.findByIdAndUpdate({ cityName, state }, { _id: _id }, { new: true })
   },
   cityRemove (_id) {
-    return City.deleteOne({_id: _id})
+    return City.deleteOne({ _id: _id })
   }
 }

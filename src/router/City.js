@@ -5,13 +5,9 @@ const CityController = require('../app/Controllers/CityController')
 
 routes.get('/:data?', CityController.getCity)
 
-// routes.get('/name/:name', CityController.showByName)
+routes.post('/', CityController.create)
 
-// routes.get('/state/:state', CityController.showByState)
-
-// routes.post('/', CityController.store)
-
-// routes.put('/:id', CityController.update)
+routes.put('/:id', CityController.update)
 
 routes.delete('/:id', CityController.delete)
 
