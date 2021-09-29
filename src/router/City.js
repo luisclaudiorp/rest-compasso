@@ -1,9 +1,9 @@
 const { Router } = require('express')
 const routes = new Router()
 
-const CityController = require('../app/Controllers/CityController')
+const CityController = require('../app/controllers/CityController')
 
-routes.get('/:data?', CityController.getCity)
+routes.get('/:data?', CityController.get)
 
 routes.post('/', CityController.create)
 

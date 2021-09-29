@@ -1,7 +1,7 @@
 const Joi = require('joi')
 
 const citySchema = Joi.object({
-  cityName: Joi.string()
+  name: Joi.string()
     .min(3)
     .max(20)
     .lowercase()

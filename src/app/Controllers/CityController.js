@@ -1,12 +1,11 @@
-const ServiceCity = require('../Service/serviceCity')
+const ServiceCity = require('../service/CityService')
 
 class CityController {
-  async getCity (req, res) {
+  async get (req, res) {
     try {
       const query = req.params.data
-      const cities = new ServiceCity()
-      const found = await cities.getCity(query)
-      return res.status(200).send(found)
+      const cities = await ServiceCity.get(query)
+      return res.status(200).send(cities)
     } catch (error) {
       return res.status(400).json({
         message: 'No cities found'
@@ -17,7 +16,7 @@ class CityController {
   async create (req, res) {
     try {
       const query = req.body
-      await new ServiceCity().createCity(query)
+      await ServiceCity.create(query)
       return res.status(201).json({
         message: 'city ​​successfully registered'
       })
@@ -29,32 +28,27 @@ class CityController {
   }
 
   async update (req, res) {
-    const query = req.params.id
-    const updateCity = await new ServiceCity().updateCity(query)
-    // try {
-
-    //   return res.status(200).send(updateCity)
-    // } catch (error) {
-    //   return res.status(400).json({
-    //     message: 'No updating city'
-    //   })
-    // }
+    try {
+      const query = req.params.id
+      const updateData = req.body
+      await ServiceCity.update(query, updateData)
+      return res.status(200).json({
+        message: 'city ​​successfully updated'
+      })
+    } catch (error) {
+      return res.status(400).json({
+        message: 'No updating city'
+      })
+    }
   }
 
   async delete (req, res) {
     try {
       const query = req.params.id
-      const cities = new ServiceCity()
-      const found = await cities.deleteCity(query)
-      if (!found) {
-        return res.status(400).json({
-          message: 'City not found'
-        })
-      } else {
-        return res.status(200).json({
-          message: 'City successfully deleted'
-        })
-      }
+      const cities = await ServiceCity.delete(query)
+      return res.status(200).json({
+        message: 'City successfully deleted'
+      })
     } catch (error) {
       return res.status(400).json({
         message: 'No deleting city'

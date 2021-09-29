@@ -4,7 +4,6 @@ const Client = mongoose.Schema({
   fullName: {
     type: String,
     required: true,
-    unique: true
   },
   sex: {
     type: String,

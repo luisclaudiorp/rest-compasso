@@ -1,5 +1,4 @@
-const Client = require('../Schema/Client')
-const yup = require('yup')
+const Client = require('../schema/Client')
 
 class ClientController {
   async showAll (req, res) {
@@ -54,18 +53,6 @@ class ClientController {
   }
 
   async store (req, res) {
-    const schema = yup.object().shape({
-      fullName: yup.string().required(),
-      birthDate: yup.string().required(),
-      city: yup.string().required(),
-      age: yup.number().required(),
-      sex: yup.string().required()
-    })
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({
-        message: 'Invalid data'
-      })
-    }
     const clientExist = await Client.findOne({ fullName: req.body.fullName })
     if (clientExist) {
       return res.status(400).json({
