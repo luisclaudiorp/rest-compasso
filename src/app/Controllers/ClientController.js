@@ -1,71 +1,23 @@
-const Client = require('../schema/Client')
+const ServiceClient = require('../service/ClientService')
 
 class ClientController {
-  async showAll (req, res) {
+  async get (req, res) {
     try {
-      const clients = await Client.find().populate('city', ['name', 'state'])
-      if (clients.length === 0) {
-        return res.status(400).json({
-          message: 'No clients found'
-        })
-      } else {
-        return res.status(200).send({ clients })
-      }
+      const { query } = req.query
+      const cities = await ServiceClient.get({ query })
+      return res.status(200).send(cities)
     } catch (error) {
       return res.status(400).json({
-        message: 'No clients found'
+        message: 'No cities found'
       })
     }
   }
 
-  async showByName (req, res) {
+  async create (req, res) {
     try {
-      const client = await Client.findOne({ fullName: req.params.fullName })
-      if (client.length === 0) {
-        return res.status(400).json({
-          message: 'No client found'
-        })
-      } else {
-        return res.status(200).send({ client })
-      }
-    } catch (error) {
-      return res.status(400).json({
-        message: 'No client found'
-      })
-    }
-  }
-
-  async showById (req, res) {
-    try {
-      const client = await Client.findOne({ _id: req.params.id })
-      if (client.length === 0) {
-        return res.status(400).json({
-          message: 'Client not found'
-        })
-      } else {
-        return res.status(200).send({ client })
-      }
-    } catch (error) {
-      return res.status(400).json({
-        message: 'Client not found'
-      })
-    }
-  }
-
-  async store (req, res) {
-    const clientExist = await Client.findOne({ fullName: req.body.fullName })
-    if (clientExist) {
-      return res.status(400).json({
-        message: 'Client already registered'
-      })
-    }
-    try {
-      const { fullName, birthDate, city, age, sex } = req.body
-      await Client.create({ fullName, birthDate, city, age, sex })
-
-      return res.status(201).json({
-        message: 'Client ​​successfully registered'
-      })
+      const query = req.body
+      const result = await ServiceClient.create(query)
+      return res.status(201).json(result)
     } catch (error) {
       return res.status(400).json({
         message: 'Error entering client'
@@ -75,11 +27,10 @@ class ClientController {
 
   async update (req, res) {
     try {
-      const { fullName, birthDate, city, age, sex } = req.body
-      const client = await Client.findByIdAndUpdate(req.params.id, {
-        fullName, birthDate, city, age, sex
-      }, { new: true })
-      return res.status(201).json({ client })
+      const { id } = req.params
+      const payload = req.body
+      const result = await ServiceClient.update(id, payload)
+      return res.status(200).json(result)
     } catch (error) {
       return res.status(400).json({
         message: 'No updating client'
@@ -87,18 +38,11 @@ class ClientController {
     }
   }
 
-  async destroy (req, res) {
+  async delete (req, res) {
     try {
-      const client = await Client.findByIdAndRemove(req.params.id)
-      if (!client) {
-        return res.status(400).json({
-          message: 'Client not found'
-        })
-      } else {
-        return res.status(200).json({
-          message: 'Client successfully deleted'
-        })
-      }
+      const { id } = req.params
+      await ServiceClient.delete(id)
+      return res.status(204).send()
     } catch (error) {
       return res.status(400).json({
         message: 'No deleting Client'

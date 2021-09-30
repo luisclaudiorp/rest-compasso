@@ -1,26 +1,25 @@
 const City = require('../schema/City')
 
 class CityRepositoy {
-  get (query) {
-    return City.find(query)
+  getAll ({ query }) {
+    return City.find({ query })
   }
 
   getOne (query) {
-    return City.findOne(query)
+    return City.findById(query)
   }
 
-  create (city) {
-    const { name, state } = city
+  create ({ name, state }) {
     return City.create({ name, state })
   }
 
-  update (city, newData) {
-    return City.findOneAndUpdate({ _id: city },newData ,{ new: true })
+  update (_id, newData) {
+    return City.findOneAndUpdate(_id, newData, { new: true })
   }
 
-  delete (_id) {
-    return City.deleteOne({ _id: _id })
+  delete ({ _id }) {
+    return City.findOneAndDelete(_id)
   }
 }
 
-module.exports =  new CityRepositoy()
+module.exports = new CityRepositoy()

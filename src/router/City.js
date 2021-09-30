@@ -1,13 +1,14 @@
 const { Router } = require('express')
 const routes = new Router()
-
+const createValidation = require('../app/validators/city/createValidation')
+const updateValidation = require('../app/validators/city/updateValidation')
 const CityController = require('../app/controllers/CityController')
 
-routes.get('/:data?', CityController.get)
+routes.get('/', CityController.get)
 
-routes.post('/', CityController.create)
+routes.post('/', createValidation, CityController.create)
 
-routes.put('/:id', CityController.update)
+routes.put('/:id', updateValidation, CityController.update)
 
 routes.delete('/:id', CityController.delete)
 

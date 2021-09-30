@@ -3,16 +3,12 @@ const routes = new Router()
 
 const ClientController = require('../app/Controllers/ClientController')
 
-routes.get('/', ClientController.showAll)
+routes.get('/', ClientController.get)
 
-routes.get('/fullName/:fullName', ClientController.showByName)
-
-routes.get('/:id', ClientController.showById)
-
-routes.post('/', ClientController.store)
+routes.post('/', ClientController.create)
 
 routes.put('/:id', ClientController.update)
 
-routes.delete('/:id', ClientController.destroy)
+routes.delete('/:id', ClientController.delete)
 
 module.exports = routes

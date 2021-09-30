@@ -1,27 +1,24 @@
 const Client = require('../schema/Client')
 
 class ClientRespository {
-  get (query) {
-    return Client.find(query)
+  getAll ({ query }) {
+    return Client.find({ query })
   }
 
   getOne (query) {
-    return Client.findOne(query)
+    return Client.findById(query)
   }
 
-  create (client) {
-    const { } = client
-    return Client.create({})
+  create ({ fullName, gender, birthDate, cityName }) {
+    return Client.create({ fullName, gender, birthDate, cityName })
   }
 
   update (_id, updateData) {
-    return Client.updateOne(updateData, {
-      $where: { _id: _id }
-    })
+    return Client.findOneAndUpdate(_id, updateData, { new: true })
   }
 
-  delete (_id) {
-    return Client.deleteOne( { _id: _id })
+  delete ({ _id }) {
+    return Client.findOneAndDelete(_id)
   }
 }
 

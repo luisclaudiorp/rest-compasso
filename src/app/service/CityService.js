@@ -1,60 +1,49 @@
 const RepositoryCity = require('../repository/CityRepository')
-const { citySchema, _idSchema } = require('../validators/CityValidation')
 
 class CityService {
-  async create (data) {
+  async get ({ query }) {
     try {
-      const validation = await citySchema.validateAsync(data)
-      await RepositoryCity.create(validation)
+      if (query) {
+        return await RepositoryCity.getOne({ query })
+      } else {
+        return await RepositoryCity.getAll({ query })
+      }
     } catch (error) {
-      throw new Error('Error')
+      return error
     }
   }
 
-  async get(data) {
-    if (typeof data === 'string' && data.length > 2) {
-      const query = { name: data }
-      const found = await RepositoryCity.getOne(query)
-      if (found === null) {
-        throw new Error('No city found')
-      }
-      return found
-    } else if (typeof data === 'string' && data.length === 2) {
-      const query = { state: data }
-      const found = await RepositoryCity.get(query)
-      if (found.length === 0) {
-        throw new Error('No state found')
-      }
-      return found
-    } else if (data === undefined) {
-      const query = {}
-      const found = await RepositoryCity.get(query)
-      return found
+  async create ({ name, state }) {
+    try {
+      return await RepositoryCity.create({ name, state })
+    } catch (error) {
+      return error
     }
   }
 
   async update (city, newData) {
     try {
-      const {_id} = await this.getId(city)
-      const validationData = await citySchema.validateAsync(newData)
-      await RepositoryCity.update(_id.toString(), validationData)
+      const { _id } = await this.getById(city)
+      return await RepositoryCity.update({ _id }, newData)
     } catch (error) {
-      throw new Error('Error')
+      return error
     }
-
   }
 
-  async getId (_id) {
+  async getById (_id) {
     try {
-      const validationId = await _idSchema.validateAsync({ _id })
-      return await RepositoryCity.getOne(validationId)
+      return await RepositoryCity.getOne(_id)
     } catch (error) {
-      throw new Error('Error')
+      return error
     }
   }
 
-  delete (_id) {
-    return RepositoryCity.delete(_id)
+  async delete (_id) {
+    try {
+      return await RepositoryCity.delete(_id)
+    } catch (error) {
+      return error
+    }
   }
 }
 

@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 const Client = mongoose.Schema({
   fullName: {
     type: String,
-    required: true
+    required: true,
   },
-  gender: {
+  sex: {
     type: String,
     required: true
   },

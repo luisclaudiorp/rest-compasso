@@ -1,36 +1,50 @@
 const RepositoryClient = require('../repository/ClientRepository')
 
 class ClientService {
-  async get () {
-    const found = await RepositoryClient.get(this._id)
-  }
-
-  async create () {
-    this.validate()
-    const result = await RepositoryClient.insert()
-  }
-
-  async update () {
-    await RepositoryClient.get(this._id)
-    const fields = ['fullName', 'sex', 'birthDate', 'cityName']
-    const dataUpdate = {}
-    fields.forEach((field) => {
-      const data = this[field]
-
-      if (typeof data === 'string' && data.length === 0) {
-        dataUpdate[field] = data
+  async get ({ query }) {
+    try {
+      if (query) {
+        return await RepositoryClient.getOne({ query })
+      } else {
+        return await RepositoryClient.getAll({ query })
       }
-      if (Object.keys(dataUpdate).length === 0) {
-        throw new Error('data not provided')
-      }
-    })
-    await RepositoryClient.update(this._id, dataUpdate)
+    } catch (error) {
+      return error
+    }
   }
 
-  delete () {
-    return RepositoryClient.remove(this._id)
+  async create ({ fullName, gender, birthDate, cityName }) {
+    try {
+      return await RepositoryClient.create({ fullName, gender, birthDate, cityName })
+    } catch (error) {
+      return error
+    }
   }
 
+  async update (client, newData) {
+    try {
+      const { _id } = await this.getById(client)
+      return await RepositoryClient.update({ _id }, newData)
+    } catch (error) {
+      return error
+    }
+  }
+
+  async getById (_id) {
+    try {
+      return await RepositoryClient.getOne(_id)
+    } catch (error) {
+      return error
+    }
+  }
+
+  async delete (_id) {
+    try {
+      return await RepositoryClient.delete(_id)
+    } catch (error) {
+      return error
+    }
+  }
 }
 
 module.exports = new ClientService()
