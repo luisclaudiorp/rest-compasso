@@ -1,8 +1,8 @@
 const Client = require('../schema/Client')
 
 class ClientRespository {
-  getAll ({ query }) {
-    return Client.find({ query })
+  getAll () {
+    return Client.find()
   }
 
   getOne (query) {

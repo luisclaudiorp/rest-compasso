@@ -13,7 +13,7 @@ class ClientController {
     }
   }
 
-  async create (req, res) {
+  async post (req, res) {
     try {
       const query = req.body
       const result = await ServiceClient.create(query)

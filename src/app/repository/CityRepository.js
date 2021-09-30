@@ -1,12 +1,12 @@
 const City = require('../schema/City')
 
 class CityRepositoy {
-  getAll ({ query }) {
-    return City.find({ query })
+  getAll () {
+    return City.find()
   }
 
   getOne (query) {
-    return City.findById(query)
+    return City.findOne(query)
   }
 
   create ({ name, state }) {
