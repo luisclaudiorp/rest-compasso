@@ -16,13 +16,12 @@ module.exports = async (req, res, next) => {
         .required(),
 
       birthDate: Joi.string()
-        .isoDate(),
+      .length(10)
+      .required(),
 
-      cityName: Joi.string()
-      .min(3)
-      .max(30)
-      .trim()
-      .required()
+      city: Joi.string()
+      .length(24)
+      .required(),
     })
     const { error } = await clientSchema.validate(req.body, { abortEarly: true })
     if(error) throw error

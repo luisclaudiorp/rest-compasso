@@ -13,9 +13,9 @@ class ClientService {
     }
   }
 
-  async create ({ fullName, gender, birthDate, cityName }) {
+  async create ({ fullName, gender, birthDate, city}) {
     try {
-      return await RepositoryClient.create({ fullName, gender, birthDate, cityName })
+      return await RepositoryClient.create({ fullName, gender, birthDate, city})
     } catch (error) {
       return error
     }
