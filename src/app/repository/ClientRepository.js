@@ -6,7 +6,11 @@ class ClientRespository {
   }
 
   getOne (query) {
-    return Client.findById(query)
+    return Client.findOne(query)
+  }
+
+  getById (_id) {
+    return Client.findById(_id)
   }
 
   create ({ fullName, gender, birthDate, city }) {
@@ -17,8 +21,8 @@ class ClientRespository {
     return Client.findOneAndUpdate(_id, updateData, { new: true })
   }
 
-  delete ({ _id }) {
-    return Client.findOneAndDelete(_id)
+  delete (_id) {
+    return Client.findByIdAndRemove(_id)
   }
 }
 

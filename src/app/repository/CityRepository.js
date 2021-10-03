@@ -17,7 +17,7 @@ class CityRepositoy {
     return City.findOneAndUpdate(_id, newData, { new: true })
   }
 
-  delete ({ _id }) {
+  delete (_id) {
     return City.findOneAndDelete(_id)
   }
 }

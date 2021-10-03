@@ -3,8 +3,8 @@ const ServiceCity = require('../service/CityService')
 class CityController {
   async get (req, res) {
     try {
-      const {name, state } = req.query
-      const cities = await ServiceCity.get({name, state })
+      const { name, state } = req.query
+      const cities = await ServiceCity.get({ name, state })
       return res.status(200).send(cities)
     } catch (error) {
       return res.status(400).json({

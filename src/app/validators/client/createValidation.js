@@ -16,15 +16,15 @@ module.exports = async (req, res, next) => {
         .required(),
 
       birthDate: Joi.string()
-      .length(10)
-      .required(),
+        .length(10)
+        .required(),
 
       city: Joi.string()
-      .length(24)
-      .required(),
+        .length(24)
+        .required()
     })
     const { error } = await clientSchema.validate(req.body, { abortEarly: true })
-    if(error) throw error
+    if (error) throw error
     return next()
   } catch (error) {
     res.status(400).json(error)

@@ -1,14 +1,14 @@
 const RepositoryCity = require('../repository/CityRepository')
 
 class CityService {
-  async get ({name, state }) {
+  async get ({ name, state }) {
     try {
-      if(typeof name === 'string'){
+      if (typeof name === 'string') {
         return await RepositoryCity.getOne({ name })
-      }else if( typeof state === 'string'){
+      } else if (typeof state === 'string') {
         return await RepositoryCity.getOne({ state })
-      }else{
-      return await RepositoryCity.getAll({})
+      } else {
+        return await RepositoryCity.getAll({})
       }
     } catch (error) {
       return error

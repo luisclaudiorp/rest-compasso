@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+mongoose.set('toJSON', { virtuals: true })
 
 const Client = mongoose.Schema({
   fullName: {
@@ -17,42 +18,33 @@ const Client = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'city',
     required: true
-  },
+  }
 }, {
   timestamps: true
 })
 
-Client.virtual('Name').
-  get(function() { return `${this.fullName} ${this.gender}`; }).
-  set(function(v) {
-    // `v` is the value being set, so use the value to set
-    // `firstName` and `lastName`.
-    const fullName = v.substring(0, v.indexOf(' '));
-    const gender = v.substring(v.indexOf(' ') + 1);
-    this.set({ fullName, gender });
-  });
+Client.virtual('age')
+  .get(function () {
+    const dates = this.birthDate.split('/')
+    const d = new Date()
 
-// Client.virtual('age')
-//   .get(function() { return `${this.age}`})
+    const userday = dates[0]
+    const usermonth = dates[1]
+    const useryear = dates[2]
 
-//   .set(function getAge (birthDate) {
-//   var dates = birthDate.split("/");
-//   var d = new Date();
+    const curday = d.getDate()
+    const curmonth = d.getMonth() + 1
+    const curyear = d.getFullYear()
 
-//   var userday = dates[0];
-//   var usermonth = dates[1];
-//   var useryear = dates[2];
+    let age = curyear - useryear
 
-//   var curday = d.getDate();
-//   var curmonth = d.getMonth()+1;
-//   var curyear = d.getFullYear();
-
-//   var age = curyear - useryear;
-
-//   if((curmonth < usermonth) || ( (curmonth == usermonth) && curday < userday   )){
-//       age--;
-//   }
-//    this.set({ age })
-// })
+    if ((curmonth < usermonth) || ((curmonth === usermonth) && curday < userday)) {
+      age--
+    }
+    return age
+  })
+  .set(function (v) {
+    this.age = v.toString()
+  })
 
 module.exports = mongoose.model('client', Client)

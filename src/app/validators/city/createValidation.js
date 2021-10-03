@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
         .required()
     })
     const { error } = await citySchema.validate(req.body, { abortEarly: true })
-    if(error) throw error
+    if (error) throw error
     return next()
   } catch (error) {
     res.status(400).json(error)
