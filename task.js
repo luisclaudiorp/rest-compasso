@@ -16,7 +16,7 @@ const payload = {
   }]
 }
 
-function teste (obj) {
+function task (obj) {
   const { cidades } = obj
   cidades[0].name = 'Caxias do Sul'
   let element = []
@@ -25,10 +25,17 @@ function teste (obj) {
     element = parseInt(cidades[index].populacao)
     total += element
   }
+  cidades.sort(function (a, b) {
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    }
+    return 0;
+  })
   obj.populacaoTotal = total
   Object.assign(payload)
   return (payload)
 }
-
-const dataModify = teste(payload)
-console.log(dataModify)
+console.log(task(payload))
