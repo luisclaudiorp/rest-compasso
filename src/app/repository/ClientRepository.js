@@ -1,8 +1,10 @@
 const Client = require('../schema/Client')
+const clear = require('../../helpers/clear')
 
 class ClientRespository {
-  getAll () {
-    return Client.find().populate('city', ['name', 'state'])
+  getAll (query) {
+    clear(query)
+    return Client.find(query).populate('city', ['name', 'state'])
   }
 
   getOne (query) {

@@ -1,8 +1,10 @@
 const City = require('../schema/City')
+const clear = require('../../helpers/clear')
 
 class CityRepositoy {
-  getAll () {
-    return City.find()
+  getAll (query) {
+    clear(query)
+    return City.find(query)
   }
 
   getOne (query) {

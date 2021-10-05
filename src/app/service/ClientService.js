@@ -1,15 +1,9 @@
 const RepositoryClient = require('../repository/ClientRepository')
 
 class ClientService {
-  async get (fullName, id) {
+  async get (query) {
     try {
-      if (typeof fullName === 'string') {
-        return await RepositoryClient.getOne({ fullName })
-      } else if (typeof id === 'string') {
-        return await RepositoryClient.getById(id)
-      } else {
-        return await RepositoryClient.getAll({})
-      }
+      return await RepositoryClient.getAll(query)
     } catch (error) {
       return error
     }
