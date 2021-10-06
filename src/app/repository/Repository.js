@@ -1,7 +1,7 @@
 const City = require('../schema/City')
 const clear = require('../../helpers/clear')
 
-class CityRepositoy {
+class Repositoy {
   getAll (query) {
     clear(query)
     return City.find(query)
@@ -24,4 +24,4 @@ class CityRepositoy {
   }
 }
 
-module.exports = new CityRepositoy()
+module.exports = new Repositoy()

@@ -13,10 +13,16 @@ module.exports = async (req, res, next) => {
         .min(1)
         .max(2)
         .trim()
-        .required()
+        .required(),
     })
     const { error } = await citySchema.validate(req.body, { abortEarly: true })
-    if (error) throw error
+    if (error) {
+      const {message} = error
+      throw {
+        type: "ValidationError",
+        message: message
+      }
+    }
     return next()
   } catch (error) {
     res.status(400).json(error)

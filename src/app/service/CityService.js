@@ -1,4 +1,4 @@
-const RepositoryCity = require('../repository/CityRepository')
+const RepositoryCity = require('../repository/Repository')
 
 class CityService {
   async get (query) {
