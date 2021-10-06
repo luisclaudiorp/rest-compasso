@@ -4,38 +4,38 @@
 
 const payload = {
   name: 'teste',
-  cidades: [{
-    name: 'Rio Grande',
-    populacao: '200'
-  }, {
-    name: 'Pelotas',
-    populacao: '300'
-  }, {
-    name: 'Rio Grande',
-    populacao: '2'
-  }]
+  cidades: [
+    { name: 'Rio Grande', populacao: '200' },
+    { name: 'Pelotas', populacao: '300' },
+    { name: 'Rio Grande', populacao: '2' }]
 }
 
-function task (obj) {
-  const { cidades } = obj
-  cidades[0].name = 'Caxias do Sul'
-  let element = []
-  let total = 0
-  for (let index = 0; index < cidades.length; index++) {
-    element = parseInt(cidades[index].populacao)
-    total += element
-  }
-  cidades.sort(function (a, b) {
-    if (a.name > b.name) {
-      return 1;
-    }
-    if (a.name < b.name) {
-      return -1;
-    }
-    return 0;
-  })
-  obj.populacaoTotal = total
-  Object.assign(payload)
-  return (payload)
-}
-console.log(task(payload))
+const { cidades } = payload
+const total = cidades.reduce((valInit, elem) => valInit + parseInt(elem.populacao), 0)
+const city = cidades.find(elem => elem.name === 'Rio Grande')
+city.name = 'Caxias do Sul'
+console.log(total, city)
+
+// function task (obj) {
+//   const { cidades } = obj
+//   cidades[0].name = 'Caxias do Sul'
+//   let element = []
+//   let total = 0
+//   for (let index = 0; index < cidades.length; index++) {
+//     element = parseInt(cidades[index].populacao)
+//     total += element
+//   }
+//   cidades.sort(function (a, b) {
+//     if (a.name > b.name) {
+//       return 1
+//     }
+//     if (a.name < b.name) {
+//       return -1
+//     }
+//     return 0
+//   })
+//   obj.populacaoTotal = total
+//   Object.assign(payload)
+//   return (payload)
+// }
+// console.log(task(payload))
