@@ -4,7 +4,7 @@ class ClientController {
   async get (req, res) {
     try {
       const { fullName, id } = req.query
-      const clients = await ServiceClient.get(fullName, id)
+      const clients = await ServiceClient.get({ fullName, id })
       return res.status(200).send(clients)
     } catch (error) {
       return res.status(400).json({

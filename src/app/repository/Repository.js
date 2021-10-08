@@ -1,27 +1,34 @@
-const City = require('../schema/City')
 const clear = require('../../helpers/clear')
 
-class Repositoy {
+class Respository {
+  constructor (schema) {
+    this._schema = schema
+  }
+
   getAll (query) {
     clear(query)
-    return City.find(query)
+    return this._schema.find(query)
   }
 
   getOne (query) {
-    return City.findOne(query)
+    return this._schema.findOne(query)
   }
 
-  create ({ name, state }) {
-    return City.create({ name, state })
+  getById (_id) {
+    return this._schema.findById(_id)
   }
 
-  update (_id, newData) {
-    return City.findOneAndUpdate(_id, newData, { new: true })
+  create ({ ...data }) {
+    return this._schema.create({ ...data })
+  }
+
+  update (_id, updateData) {
+    return this._schema.findOneAndUpdate(_id, updateData, { new: true })
   }
 
   delete (_id) {
-    return City.findOneAndDelete(_id)
+    return this._schema.findByIdAndRemove(_id)
   }
 }
 
-module.exports = new Repositoy()
+module.exports = Respository

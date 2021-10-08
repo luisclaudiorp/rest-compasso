@@ -1,9 +1,11 @@
-const RepositoryCity = require('../repository/Repository')
+// const RepositoryCity = require('../repository/Repository')
+const Repository = require('../repository/Repository')
+const City = require('../schema/City')
 
 class CityService {
   async get (query) {
     try {
-      return await RepositoryCity.getAll(query)
+      return await new Repository(City).getAll(query)
     } catch (error) {
       return error
     }
@@ -11,7 +13,7 @@ class CityService {
 
   async create ({ name, state }) {
     try {
-      return await RepositoryCity.create({ name, state })
+      return await new Repository(City).create({ name, state })
     } catch (error) {
       return error
     }
@@ -20,7 +22,7 @@ class CityService {
   async update (city, newData) {
     try {
       const { _id } = await this.getById(city)
-      return await RepositoryCity.update({ _id }, newData)
+      return await new Repository(City).update({ _id }, newData)
     } catch (error) {
       return error
     }
@@ -28,7 +30,7 @@ class CityService {
 
   async getById (_id) {
     try {
-      return await RepositoryCity.getOne(_id)
+      return await new Repository(City).getOne(_id)
     } catch (error) {
       return error
     }
@@ -36,7 +38,7 @@ class CityService {
 
   async delete (_id) {
     try {
-      return await RepositoryCity.delete(_id)
+      return await new Repository(City).delete(_id)
     } catch (error) {
       return error
     }

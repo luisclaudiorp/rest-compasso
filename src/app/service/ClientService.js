@@ -1,17 +1,18 @@
-const RepositoryClient = require('../repository/ClientRepository')
+const Repository = require('../repository/Repository')
+const Client = require('../schema/Client')
 
 class ClientService {
   async get (query) {
     try {
-      return await RepositoryClient.getAll(query)
+      return await new Repository(Client).getAll(query)
     } catch (error) {
       return error
     }
   }
 
-  async create ({ fullName, gender, birthDate, city }) {
+  async create ({ ...data }) {
     try {
-      return await RepositoryClient.create({ fullName, gender, birthDate, city })
+      return await new Repository(Client).create({ ...data })
     } catch (error) {
       return error
     }
@@ -19,8 +20,8 @@ class ClientService {
 
   async update (client, newData) {
     try {
-      const { _id } = await RepositoryClient.getById(client)
-      return await RepositoryClient.update({ _id }, newData)
+      const { _id } = await new Repository(Client).getById(client)
+      return await new Repository(Client).update({ _id }, newData)
     } catch (error) {
       return error
     }
@@ -28,7 +29,7 @@ class ClientService {
 
   async getById (_id) {
     try {
-      return await RepositoryClient.getOne(_id)
+      return await new Repository(Client).getOne(_id)
     } catch (error) {
       return error
     }
@@ -36,7 +37,7 @@ class ClientService {
 
   async delete (_id) {
     try {
-      return await RepositoryClient.delete(_id)
+      return await new Repository(Client).delete(_id)
     } catch (error) {
       return error
     }
