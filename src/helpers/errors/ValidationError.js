@@ -4,12 +4,14 @@ class ValidationError extends Error {
     this.name = this.constructor.name;
     Error.captureStackTrace(this, this.constructor);
     this.type = "Validadion Error";
-    this.message = error.details[0].message;
-    this.details = {
-      path: error.details[0].path,
-      type: error.details[0].type,
-      context: error.details[0].context,
-    };
+    for (let key of Object.keys(error.details)) {
+      this.message = error.details[key].message;
+      this.details = {
+        path: error.details[key].path,
+        type: error.details[key].type,
+        context: error.details[key].context,
+      };
+    }
     this.status = status || 500;
   }
 }

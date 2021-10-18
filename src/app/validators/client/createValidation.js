@@ -1,5 +1,5 @@
 const Joi = require('joi')
-
+const ValidationError = require('../../../helpers/errors/ValidationError')
 module.exports = async (req, res, next) => {
   try {
     const clientSchema = Joi.object({
@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
         .required()
     })
     const { error } = await clientSchema.validate(req.body, { abortEarly: true })
-    if (error) throw error
+    if (error) throw new ValidationError(error, 400)
     return next()
   } catch (error) {
     res.status(400).json(error)

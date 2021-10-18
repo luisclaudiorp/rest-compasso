@@ -7,7 +7,9 @@ module.exports = async (req, res, next) => {
 
       state: Joi.string().min(1).max(2).trim().required(),
     });
-    const { error } = await citySchema.validate(req.body, { abortEarly: true });
+    const { error } = await citySchema.validate(req.body, {
+      abortEarly: true,
+    });
     if (error) throw new ValidationError(error, 400);
     return next();
   } catch (error) {
