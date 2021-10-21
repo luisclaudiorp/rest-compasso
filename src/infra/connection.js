@@ -1,19 +1,21 @@
-const mongoose = require('mongoose')
-require('dotenv').config()
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 class Connection {
-  constructor () {
-    this.dataBaseConnectionMongoDB()
+  constructor() {
+    this.dataBaseConnectionMongoDB();
   }
 
-  dataBaseConnectionMongoDB () {
-    this.mongoDBConnection = mongoose.connect(process.env.DB_HOST)
+  async dataBaseConnectionMongoDB() {
+    this.mongoDBConnection = await mongoose
+      .connect(process.env.DB_HOST)
       .then(() => {
-        console.log('Connected to MongoDB')
-      }).catch((error) => {
-        console.log(`Connection failed to MongoDB error: ${error}`)
+        console.log("Connected to MongoDB");
       })
+      .catch((error) => {
+        console.log(`Connection failed to MongoDB error: ${error}`);
+      });
   }
 }
 
-module.exports = new Connection()
+module.exports = new Connection();

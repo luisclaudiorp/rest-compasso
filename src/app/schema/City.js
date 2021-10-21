@@ -1,16 +1,22 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 
-const City = mongoose.Schema({
-  name: {
-    type: String,
-    required: true
+const City = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    state: {
+      type: String,
+      required: true,
+    },
   },
-  state: {
-    type: String,
-    required: true
+  {
+    timestamps: true,
   }
-}, {
-  timestamps: true
-})
+);
 
-module.exports = mongoose.model('city', City)
+City.plugin(mongoosePaginate);
+
+module.exports = mongoose.model("city", City);

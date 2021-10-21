@@ -1,46 +1,46 @@
-const CityRepository = require('../repository/CityRepository')
+const CityRepository = require("../repository/CityRepository");
 
 class CityService {
-  async get (query) {
+  async get(query, options) {
     try {
-      return await CityRepository.getAll(query)
+      return await CityRepository.getAll(query, options);
     } catch (error) {
-      return error
+      return error;
     }
   }
 
-  async create ({ name, state }) {
+  async create({ name, state }) {
     try {
-      return await CityRepository.create({ name, state })
+      return await CityRepository.create({ name, state });
     } catch (error) {
-      return error
+      return error;
     }
   }
 
-  async update (city, newData) {
+  async update(city, newData) {
     try {
-      const { _id } = await this.getById(city)
-      return await CityRepository.update({ _id }, newData)
+      const { _id } = await this.getById(city);
+      return await CityRepository.update({ _id }, newData);
     } catch (error) {
-      return error
+      return error;
     }
   }
 
-  async getById (_id) {
+  async getById(_id) {
     try {
-      return await CityRepository.getOne(_id)
+      return await CityRepository.getOne(_id);
     } catch (error) {
-      return error
+      return error;
     }
   }
 
-  async delete (_id) {
+  async delete(_id) {
     try {
-      return await CityRepository.delete(_id)
+      return await CityRepository.delete(_id);
     } catch (error) {
-      return error
+      return error;
     }
   }
 }
 
-module.exports = new CityService()
+module.exports = new CityService();

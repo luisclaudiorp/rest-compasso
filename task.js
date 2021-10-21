@@ -2,19 +2,23 @@
 // ordenar por crescente e decrescente
 // contagem da população
 
-const payload = {
-  name: 'teste',
-  cidades: [
-    { name: 'Rio Grande', populacao: '200' },
-    { name: 'Pelotas', populacao: '300' },
-    { name: 'Rio Grande', populacao: '2' }]
-}
+// const payload = {
+//   name: "teste",
+//   cidades: [
+//     { name: "Rio Grande", populacao: "200" },
+//     { name: "Pelotas", populacao: "300" },
+//     { name: "Rio Grande", populacao: "2" },
+//   ],
+// };
 
-const { cidades } = payload
-const total = cidades.reduce((valInit, elem) => valInit + parseInt(elem.populacao), 0)
-const city = cidades.find(elem => elem.name === 'Rio Grande')
-city.name = 'Caxias do Sul'
-console.log(total, city)
+// const { cidades } = payload;
+// const total = cidades.reduce(
+//   (valInit, elem) => valInit + parseInt(elem.populacao),
+//   0
+// );
+// const city = cidades.find((elem) => elem.name === "Rio Grande");
+// city.name = "Caxias do Sul";
+// console.log(total, city);
 
 // function task (obj) {
 //   const { cidades } = obj
@@ -39,3 +43,26 @@ console.log(total, city)
 //   return (payload)
 // }
 // console.log(task(payload))
+
+const query = {
+  name: "rio",
+};
+
+function regex(obj) {
+  for (const key in obj) {
+    if (Object.hasOwnProperty.call(obj, key, value)) {
+      const element = new RegExp(obj[key]);
+      return element;
+    }
+  }
+}
+
+console.log(regex(query));
+
+//console.log(Object.entries(query));
+
+// Object.entries(query).forEach(([key, value]) => {
+//   query.RegExp(query[key])
+// });
+
+// console.log(newObj);
